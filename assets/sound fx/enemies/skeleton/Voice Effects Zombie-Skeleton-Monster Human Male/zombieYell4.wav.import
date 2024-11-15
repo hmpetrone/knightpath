@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://5atnfv2526ea"
+path="res://.godot/imported/zombieYell4.wav-03e0e9b6144034906d7d249815fe94e8.sample"
+
+[deps]
+
+source_file="res://assets/sound fx/enemies/skeleton/Voice Effects Zombie-Skeleton-Monster Human Male/zombieYell4.wav"
+dest_files=["res://.godot/imported/zombieYell4.wav-03e0e9b6144034906d7d249815fe94e8.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

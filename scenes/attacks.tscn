@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3 uid="uid://dtrhu8dw23x6a"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xnxy6"]
+radius = 19.9873
+height = 50.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kla4x"]
+radius = 23.7587
+
+[node name="attacks" type="Area2D" groups=["attack_area"]]
+collision_layer = 8
+collision_mask = 6
+
+[node name="attack shape" type="CollisionShape2D" parent="."]
+position = Vector2(42, -20)
+rotation = -1.55939
+shape = SubResource("CapsuleShape2D_xnxy6")
+disabled = true
+
+[node name="crouching attack shape" type="CollisionShape2D" parent="."]
+position = Vector2(12, -12)
+rotation = -0.079284
+scale = Vector2(1.53029, 0.519999)
+shape = SubResource("CircleShape2D_kla4x")
+disabled = true

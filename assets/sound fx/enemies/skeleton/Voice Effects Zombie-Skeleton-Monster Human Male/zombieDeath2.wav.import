@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://c40bbv8dn084d"
+path="res://.godot/imported/zombieDeath2.wav-a63a877408433cc86463a54019b82c74.sample"
+
+[deps]
+
+source_file="res://assets/sound fx/enemies/skeleton/Voice Effects Zombie-Skeleton-Monster Human Male/zombieDeath2.wav"
+dest_files=["res://.godot/imported/zombieDeath2.wav-a63a877408433cc86463a54019b82c74.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0
