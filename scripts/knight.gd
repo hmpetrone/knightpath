@@ -116,14 +116,11 @@ func first_attack():
 		attacking = true
 		speed = speed * 0.2
 		if is_crouching:
-			print('first attack crouching animation')
 			prop = crouching_attack_shape
 			knight_animations.play("crouching_first_attack")
 		else:
-			print('first attack animation')
 			prop = attack_shape
 			knight_animations.play("first_attack")
-		print('animation played')
 		prop.disabled = false
 
 		
@@ -149,7 +146,6 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 
 func _on_knight_animations_animation_finished() -> void:
 	if knight_animations.animation == "first_attack" or knight_animations.animation == "crouching_first_attack":
-		print('attack finished')
 		attacking = false
 		crouching_attack_shape.disabled = true
 		attack_shape.disabled = true

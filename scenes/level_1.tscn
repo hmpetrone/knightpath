@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=4 uid="uid://c7nn5fcqaye1b"]
+[gd_scene load_steps=19 format=4 uid="uid://c7nn5fcqaye1b"]
 
 [ext_resource type="Script" path="res://scripts/levels/level_1.gd" id="1_4fo50"]
 [ext_resource type="Texture2D" uid="uid://1ny8rcjbawx8" path="res://assets/village/Texture/TX Tileset Ground.png" id="1_5ebe0"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://cl835jxoggn6q" path="res://assets/backgrounds/space/Nebula Blue.png" id="2_e0byq"]
 [ext_resource type="Texture2D" uid="uid://csxxmeo6dumqu" path="res://assets/backgrounds/space/Stars Small_1.png" id="3_umkeg"]
 [ext_resource type="PackedScene" uid="uid://bsyumxxyfcis6" path="res://scenes/chest1.tscn" id="4_2qkqs"]
+[ext_resource type="AudioStream" uid="uid://ccus26mxpt0qv" path="res://assets/audio/music/Daft Punk - Instant Crush (GarageBand cover).mp3" id="7_4a0au"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ujwi8"]
 texture = ExtResource("2_8rodu")
@@ -5331,6 +5332,12 @@ tile_set = SubResource("TileSet_1r4ak")
 [node name="knight" parent="." instance=ExtResource("1_bew6k")]
 unique_name_in_owner = true
 position = Vector2(-18, 1)
+
+[node name="music track" type="AudioStreamPlayer2D" parent="knight"]
+position = Vector2(18, -1)
+stream = ExtResource("7_4a0au")
+autoplay = true
+bus = &"Music"
 
 [node name="camera" parent="knight" instance=ExtResource("2_01vgu")]
 position = Vector2(63, -126)
