@@ -169,7 +169,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"attack",
-"speed": 10.0
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -289,12 +289,9 @@ script = ExtResource("1_nqbet")
 position = Vector2(-8, -30)
 scale = Vector2(1.23333, 1.15333)
 sprite_frames = SubResource("SpriteFrames_mopmx")
-animation = &"hurt"
-frame = 3
-frame_progress = 1.0
+animation = &"death"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2(4, -30)
 rotation = -0.011321
 shape = ExtResource("5_h6f6y")
@@ -323,7 +320,6 @@ rotation = 0.128113
 shape = ExtResource("5_h6f6y")
 
 [node name="dirt" type="Sprite2D" parent="."]
-visible = false
 position = Vector2(0, -2.22341)
 scale = Vector2(0.319018, 0.211352)
 texture = ExtResource("9_10xw1")
@@ -332,9 +328,9 @@ region_rect = Rect2(0, 168.545, 194.781, 44.7297)
 
 [node name="emerging sound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("10_3k18p")
-bus = &"sfx"
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="frame_changed" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_frame_changed"]
 [connection signal="timeout" from="direction timer" to="." method="_on_direction_timer_timeout"]
 [connection signal="area_entered" from="first attack area" to="." method="_on_first_attack_area_area_entered"]
 [connection signal="body_entered" from="first attack area" to="." method="_on_first_attack_area_body_entered"]

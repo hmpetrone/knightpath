@@ -1,7 +1,5 @@
 extends CharacterBody2D
 
-@export var _knight: CharacterBody2D
-
 @export var SPEED: float = 150
 @export var JUMP_VELOCITY: float
 @onready var knight_animations: AnimatedSprite2D = $"knight animations"
@@ -50,36 +48,36 @@ func _physics_process(delta: float) -> void:
 	
 func update_animations():
 	if not die:
-		if velocity.x and attacking == false:
+		if velocity.x and not attacking and not taking_damage:
 			if is_crouching:
 				knight_animations.play("crouch")
 			else:
 				knight_animations.play("run")
-		else:
-			if attacking == false and not taking_damage:
-				if is_crouching:
-					knight_animations.play("crouch_stay")
-				else:
-					knight_animations.play("idle")
-			elif taking_damage:
-				knight_animations.play("hit")
-		if not is_on_floor() and attacking == false:
-			knight_animations.play("jump")
+		elif not attacking and not taking_damage:
+			if is_crouching:
+				knight_animations.play("crouch_stay")
+			elif not attacking:
+				knight_animations.play("idle")
+		if not is_on_floor() and not attacking and not taking_damage:
+			if velocity.y < 0:
+				knight_animations.play("jump")
+			else:
+				knight_animations.play("fall")
 
 
 func move_x():
 	if die:
 		velocity.x = 0
 		return
+		
 	var direction := Input.get_axis("move_left", "move_right")
 	if direction:
 		velocity.x = direction * speed
 	else:
-		velocity.x = move_toward(velocity.x, 0, speed)
+		velocity.x = move_toward(velocity.x, 0, speed*0.1)
 
 func flip():
-	if (is_facing_right and velocity.x < 0) or (not is_facing_right and velocity.x > 0) and not die:
-		if attacking: return;
+	if (is_facing_right and velocity.x < 0) or (not is_facing_right and velocity.x > 0) and not die and not attacking:
 		scale.x *= -1
 		is_facing_right = not is_facing_right
 
@@ -118,21 +116,16 @@ func first_attack():
 		attacking = true
 		speed = speed * 0.2
 		if is_crouching:
+			print('first attack crouching animation')
 			prop = crouching_attack_shape
 			knight_animations.play("crouching_first_attack")
 		else:
+			print('first attack animation')
 			prop = attack_shape
 			knight_animations.play("first_attack")
+		print('animation played')
 		prop.disabled = false
-			
-func _on_knight_animations_animation_finished() -> void:
-	if knight_animations.animation == "first_attack" or knight_animations.animation == "crouching_first_attack":
-		attacking = false
-		crouching_attack_shape.disabled = true
-		attack_shape.disabled = true
-		speed = SPEED
-	if knight_animations.animation == "hit":
-		taking_damage = false
+
 		
 func death():
 	health = min_health
@@ -146,9 +139,20 @@ func take_damage(damage_received):
 	if health <= min_health:
 		death()
 	else:
-		#var child = "hit"+str(randi_range(1,3))
+		knight_animations.play("hurt")
 		sounds.get_child(randi_range(0,2)).play()
 		taking_damage = true
 
 func _on_hitbox_area_entered(area: Area2D) -> void:
 	if not die: take_damage(area.damage)
+
+
+func _on_knight_animations_animation_finished() -> void:
+	if knight_animations.animation == "first_attack" or knight_animations.animation == "crouching_first_attack":
+		print('attack finished')
+		attacking = false
+		crouching_attack_shape.disabled = true
+		attack_shape.disabled = true
+		speed = SPEED
+	if knight_animations.animation == "hurt":
+		taking_damage = false

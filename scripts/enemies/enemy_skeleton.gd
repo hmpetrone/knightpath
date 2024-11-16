@@ -67,7 +67,10 @@ func emerge():
 	
 func handle_animation():
 	if emerging: return
-	if !dead and !taking_damage and ! dealing_damage:
+	if dead:
+		animated_sprite_2d.play("death")
+		await get_tree().create_timer(2).timeout
+	elif !taking_damage and !dealing_damage:
 		if velocity.x < 0:
 			animated_sprite_2d.play("walk")
 			flip()
@@ -76,15 +79,6 @@ func handle_animation():
 			flip()
 		else:
 			animated_sprite_2d.play("idle")
-	elif !dead and taking_damage and !dealing_damage:
-		animated_sprite_2d.play("hurt")
-		await get_tree().create_timer(0.6).timeout
-		taking_damage = false
-	elif dead and roaming:
-		roaming = false
-		animated_sprite_2d.play("death")
-		await get_tree().create_timer(3).timeout
-		handle_death()
 
 func flip():
 	if (is_facing_right and velocity.x < 0) or (not is_facing_right and velocity.x > 0):
@@ -99,7 +93,7 @@ func move():
 			speed = SPEED
 			velocity.x = dir * speed
 		elif chasing and !taking_damage:
-			speed = SPEED * 3
+			speed = SPEED * 2.5
 			var distance_to_player = position.distance_to(player.position)
 			if distance_to_player > flip_threshold:
 				velocity.x = to_player.x * speed
@@ -137,33 +131,48 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 func take_damage():
 	var player_damage = player.damage
 	health -= player_damage
-	taking_damage = true
 	if health <= min_health:
 		health = min_health
 		dead = true
+		animated_sprite_2d.play("death")
+		await get_tree().create_timer(2).timeout
+	else:
+		taking_damage = true
+		animated_sprite_2d.play("hurt")
 
 func first_attack():
 	speed = SPEED * 0.5
 	dealing_damage = true
 	animated_sprite_2d.play("attack")
-	await get_tree().create_timer(0.4).timeout
-	collision_shape_2d.disabled = false
-	await get_tree().create_timer(0.7).timeout
-	collision_shape_2d.disabled = true
 	speed = SPEED
 	
-func _on_first_attack_area_area_entered(area: Area2D) -> void:
-	if area.is_in_group("player_hitbox_area"):
-		dealing_damage = true
-		await get_tree().create_timer(0.7).timeout
-		dealing_damage = false
+#func _on_first_attack_area_area_entered(area: Area2D) -> void:
+	#if area.is_in_group("player_hitbox_area"):
+		#await get_tree().create_timer(1.5).timeout
 
 func _on_animated_sprite_2d_animation_finished() -> void:
 	if animated_sprite_2d.animation == "attack":
-		await get_tree().create_timer(2).timeout
 		dealing_damage = false
+		collision_shape_2d.disabled = true
+		speed = SPEED
+	if animated_sprite_2d.animation == "hurt":
+		taking_damage = false
+		collision_shape_2d.disabled = true
+		speed = SPEED
+	if animated_sprite_2d.animation == "death":
+		roaming == false
+		await get_tree().create_timer(2).timeout
+		handle_death()
 
 func _on_first_attack_area_body_entered(body: Node2D) -> void:
 	if body == player:
 		if body.die:
 			chasing = false
+
+func _on_animated_sprite_2d_frame_changed() -> void:
+	if animated_sprite_2d.animation == "attack":
+		var current_frame = animated_sprite_2d.frame
+		if current_frame == 6 or current_frame == 7:
+			collision_shape_2d.disabled = false
+		else:
+			collision_shape_2d.disabled = true

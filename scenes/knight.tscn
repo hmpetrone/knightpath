@@ -1,4 +1,4 @@
-[gd_scene load_steps=80 format=3 uid="uid://dcptyrkkswfhi"]
+[gd_scene load_steps=83 format=3 uid="uid://dcptyrkkswfhi"]
 
 [ext_resource type="Script" path="res://scripts/knight.gd" id="1_q6gek"]
 [ext_resource type="Texture2D" uid="uid://dcnt2ba58fbqv" path="res://assets/knight/Colour2/Outline/120x80_PNGSheets/_Idle.png" id="1_tpdud"]
@@ -13,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://cisychg510htk" path="res://assets/knight/Colour2/Outline/120x80_PNGSheets/_DeathNoMovement.png" id="7_ggns7"]
 [ext_resource type="Texture2D" uid="uid://c61jeicqtcg2c" path="res://assets/knight/Colour2/Outline/120x80_PNGSheets/_Hit.png" id="8_1pvwo"]
 [ext_resource type="Texture2D" uid="uid://pmyj2ixfwsg2" path="res://assets/knight/Colour2/Outline/120x80_PNGSheets/_Hit2.PNG" id="9_c8vsj"]
+[ext_resource type="Texture2D" uid="uid://d3kjbio2igddy" path="res://assets/knight/Colour2/Outline/120x80_PNGSheets/_JumpFallInbetween.png" id="12_oq4ms"]
 [ext_resource type="PackedScene" uid="uid://dtrhu8dw23x6a" path="res://scenes/attacks.tscn" id="12_q2eim"]
 [ext_resource type="Shape2D" uid="uid://mbjtynl7lys3" path="res://resources/knight/collision shapes/knight_standing.tres" id="13_loi56"]
 [ext_resource type="AudioStream" uid="uid://bwx6vv3maj0pm" path="res://assets/sound fx/enemies/skeleton/Voice Effects Zombie-Skeleton-Monster Human Male/humanYell5.wav" id="16_oxg0p"]
@@ -138,6 +139,14 @@ region = Rect2(960, 0, 120, 80)
 [sub_resource type="AtlasTexture" id="AtlasTexture_1nbe5"]
 atlas = ExtResource("7_ggns7")
 region = Rect2(1080, 0, 120, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c2rkm"]
+atlas = ExtResource("12_oq4ms")
+region = Rect2(0, 0, 120, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xwlel"]
+atlas = ExtResource("12_oq4ms")
+region = Rect2(120, 0, 120, 80)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4iws1"]
 atlas = ExtResource("5_kavud")
@@ -383,6 +392,17 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_c2rkm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xwlel")
+}],
+"loop": false,
+"name": &"fall",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_4iws1")
 }, {
 "duration": 1.0,
@@ -409,8 +429,8 @@ animations = [{
 "texture": SubResource("AtlasTexture_x0qxx")
 }],
 "loop": false,
-"name": &"hit",
-"speed": 12.0
+"name": &"hurt",
+"speed": 20.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -497,17 +517,16 @@ animations = [{
 "speed": 15.0
 }]
 
-[node name="knight" type="CharacterBody2D" node_paths=PackedStringArray("_knight")]
+[node name="knight" type="CharacterBody2D"]
 z_index = 5
 collision_mask = 48
 script = ExtResource("1_q6gek")
-_knight = NodePath(".")
 JUMP_VELOCITY = -300.0
 
 [node name="knight animations" type="AnimatedSprite2D" parent="."]
 position = Vector2(12, -40)
 sprite_frames = SubResource("SpriteFrames_52aw5")
-animation = &"hit"
+animation = &"hurt"
 autoplay = "idle"
 frame = 2
 frame_progress = 1.0
@@ -530,7 +549,6 @@ shape = ExtResource("13_loi56")
 
 [node name="hit1" type="AudioStreamPlayer2D" parent="sounds"]
 stream = ExtResource("16_oxg0p")
-bus = &"sfx"
 
 [node name="hit2" type="AudioStreamPlayer2D" parent="sounds"]
 stream = ExtResource("17_52ce1")
