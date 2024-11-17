@@ -36,9 +36,9 @@ func spawn_wave():
 	var rng = RandomNumberGenerator.new()
 	skeleton_spawn.position.y = -15
 	#var array = [0.1, 0.2, 0.5]
-	for i in range(1, 3):
+	for i in range(1, 4):
 		#await get_tree().create_timer(array.pick_random()).timeout
-		skeleton_spawn.position.x = rng.randf_range(-340, 500)
+		skeleton_spawn.position.x = rng.randf_range(-30, 380)
 		skeleton = enemy_skeleton.instantiate()
 		skeleton.global_position = skeleton_spawn.global_position
 		skeleton.player = knight

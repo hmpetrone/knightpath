@@ -169,7 +169,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"attack",
-"speed": 5.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -282,14 +282,16 @@ height = 88.0225
 position = Vector2(0, 2)
 scale = Vector2(0.734711, 0.659925)
 collision_layer = 4
-collision_mask = 44
+collision_mask = 36
 script = ExtResource("1_nqbet")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(-8, -30)
 scale = Vector2(1.23333, 1.15333)
 sprite_frames = SubResource("SpriteFrames_mopmx")
-animation = &"death"
+animation = &"attack"
+frame = 7
+frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(4, -30)
@@ -312,7 +314,7 @@ disabled = true
 [node name="hitbox" type="Area2D" parent="."]
 position = Vector2(5, -2)
 collision_layer = 4
-collision_mask = 12
+collision_mask = 40
 
 [node name="hitbox shape" type="CollisionShape2D" parent="hitbox"]
 position = Vector2(-2, -28)

@@ -136,9 +136,12 @@ func take_damage(damage_received):
 	if health <= min_health:
 		death()
 	else:
+		taking_damage = true
 		knight_animations.play("hurt")
 		sounds.get_child(randi_range(0,2)).play()
-		taking_damage = true
+		await get_tree().create_timer(0.2).timeout
+		if knight_animations.animation != "hurt":
+			taking_damage = false
 
 func _on_hitbox_area_entered(area: Area2D) -> void:
 	if not die: take_damage(area.damage)

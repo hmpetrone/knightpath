@@ -12,6 +12,7 @@ extends CharacterBody2D
 @onready var emerging_sound: AudioStreamPlayer2D = $"emerging sound"
 @onready var collision_shape_2d: CollisionShape2D = $"first attack area/CollisionShape2D"
 
+
 @export var SPEED: int = 30
 var speed = SPEED
 var chasing: bool = false
@@ -69,7 +70,6 @@ func handle_animation():
 	if emerging: return
 	if dead:
 		animated_sprite_2d.play("death")
-		await get_tree().create_timer(2).timeout
 	elif !taking_damage and !dealing_damage:
 		if velocity.x < 0:
 			animated_sprite_2d.play("walk")
@@ -98,6 +98,7 @@ func move():
 			if distance_to_player > flip_threshold:
 				velocity.x = to_player.x * speed
 			else:
+				print("handle animation dealing damage: ",dealing_damage)
 				velocity.x = 0
 				if (is_facing_right and to_player.x < 0) or (not is_facing_right and to_player.x > 0):
 					scale.x *= -1
@@ -123,17 +124,18 @@ func _on_direction_timer_timeout() -> void:
 		dir = choose([1, -1])
 		velocity.x = 0
 
-
 func _on_hitbox_area_entered(area: Area2D) -> void:
 	if area == player.attacks_area:
 		take_damage()
-		
+
 func take_damage():
 	var player_damage = player.damage
 	health -= player_damage
 	if health <= min_health:
 		health = min_health
 		dead = true
+		enemy_skeleton.set_collision_mask_value(3, false)
+		hitbox.set_collision_mask_value(3, false)
 		animated_sprite_2d.play("death")
 		await get_tree().create_timer(2).timeout
 	else:
@@ -144,24 +146,25 @@ func first_attack():
 	speed = SPEED * 0.5
 	dealing_damage = true
 	animated_sprite_2d.play("attack")
-	speed = SPEED
+	print("first_attack() dealing damage: ",dealing_damage)
+	await get_tree().create_timer(0.8).timeout
+	if animated_sprite_2d.animation != "attack":
+		print("first_attack() dealing damage after timeout: ",dealing_damage)
+		dealing_damage = false
+		collision_shape_2d.disabled = true
 	
-#func _on_first_attack_area_area_entered(area: Area2D) -> void:
-	#if area.is_in_group("player_hitbox_area"):
-		#await get_tree().create_timer(1.5).timeout
 
 func _on_animated_sprite_2d_animation_finished() -> void:
 	if animated_sprite_2d.animation == "attack":
+		print("attack finished animation dealing damage: ",dealing_damage)
 		dealing_damage = false
 		collision_shape_2d.disabled = true
-		speed = SPEED
 	if animated_sprite_2d.animation == "hurt":
 		taking_damage = false
 		collision_shape_2d.disabled = true
 		speed = SPEED
 	if animated_sprite_2d.animation == "death":
 		roaming == false
-		await get_tree().create_timer(2).timeout
 		handle_death()
 
 func _on_first_attack_area_body_entered(body: Node2D) -> void:

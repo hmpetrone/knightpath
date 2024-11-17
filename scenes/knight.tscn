@@ -479,7 +479,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"hurt",
-"speed": 20.0
+"speed": 15.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -605,6 +605,11 @@ animations = [{
 "loop": true,
 "name": &"run",
 "speed": 15.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
 }]
 
 [node name="knight" type="CharacterBody2D"]
@@ -616,9 +621,10 @@ JUMP_VELOCITY = -350.0
 [node name="knight animations" type="AnimatedSprite2D" parent="."]
 position = Vector2(12, -40)
 sprite_frames = SubResource("SpriteFrames_52aw5")
-animation = &"roll"
+animation = &"hurt"
 autoplay = "idle"
-frame_progress = 0.866928
+frame = 2
+frame_progress = 1.0
 
 [node name="idle shape" type="CollisionShape2D" parent="."]
 position = Vector2(7.25, -18)
