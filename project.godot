@@ -73,6 +73,7 @@ first_attack={
 2d_physics/layer_6="floor"
 2d_physics/layer_7="player hitbox"
 2d_physics/layer_8="surprise area"
+2d_physics/layer_9="enemy_sight"
 
 [rendering]
 

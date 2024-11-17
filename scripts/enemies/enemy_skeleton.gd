@@ -98,7 +98,6 @@ func move():
 			if distance_to_player > flip_threshold:
 				velocity.x = to_player.x * speed
 			else:
-				print("handle animation dealing damage: ",dealing_damage)
 				velocity.x = 0
 				if (is_facing_right and to_player.x < 0) or (not is_facing_right and to_player.x > 0):
 					scale.x *= -1
@@ -146,17 +145,14 @@ func first_attack():
 	speed = SPEED * 0.5
 	dealing_damage = true
 	animated_sprite_2d.play("attack")
-	print("first_attack() dealing damage: ",dealing_damage)
 	await get_tree().create_timer(0.8).timeout
 	if animated_sprite_2d.animation != "attack":
-		print("first_attack() dealing damage after timeout: ",dealing_damage)
 		dealing_damage = false
 		collision_shape_2d.disabled = true
 	
 
 func _on_animated_sprite_2d_animation_finished() -> void:
 	if animated_sprite_2d.animation == "attack":
-		print("attack finished animation dealing damage: ",dealing_damage)
 		dealing_damage = false
 		collision_shape_2d.disabled = true
 	if animated_sprite_2d.animation == "hurt":
@@ -169,7 +165,7 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 
 func _on_first_attack_area_body_entered(body: Node2D) -> void:
 	if body == player:
-		if body.die:
+		if body.died:
 			chasing = false
 
 func _on_animated_sprite_2d_frame_changed() -> void:
@@ -179,3 +175,9 @@ func _on_animated_sprite_2d_frame_changed() -> void:
 			collision_shape_2d.disabled = false
 		else:
 			collision_shape_2d.disabled = true
+
+func _on_sight_body_entered(body: Node2D) -> void:
+	chasing = true
+
+func _on_sight_body_exited(body: Node2D) -> void:
+	chasing = false

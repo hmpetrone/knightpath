@@ -16,7 +16,7 @@ var is_crouching = false
 var attacking = false
 var alive = true
 var taking_damage = false
-var die: bool = false
+var died: bool = false
 
 #player stats
 var damage = 15
@@ -38,7 +38,7 @@ var crouch_cshape = preload("res://resources/knight/collision shapes/knight_crou
 
 func _physics_process(delta: float) -> void:
 	jump(delta)
-	if die: return
+	if died: return
 	move_x()
 	flip()
 	crouch()
@@ -47,7 +47,7 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	
 func update_animations():
-	if not die:
+	if not died:
 		if velocity.x and not attacking and not taking_damage:
 			if is_crouching:
 				knight_animations.play("crouch")
@@ -66,7 +66,7 @@ func update_animations():
 
 
 func move_x():
-	if die:
+	if died:
 		velocity.x = 0
 		return
 		
@@ -77,7 +77,7 @@ func move_x():
 		velocity.x = move_toward(velocity.x, 0, speed*0.1)
 
 func flip():
-	if (is_facing_right and velocity.x < 0) or (not is_facing_right and velocity.x > 0) and not die and not attacking:
+	if (is_facing_right and velocity.x < 0) or (not is_facing_right and velocity.x > 0) and not died and not attacking:
 		scale.x *= -1
 		is_facing_right = not is_facing_right
 
@@ -126,7 +126,7 @@ func first_attack():
 		
 func death():
 	health = min_health
-	die = true;
+	died = true;
 	knight_animations.play("death")
 	Engine.time_scale = 0.5
 	
@@ -144,7 +144,7 @@ func take_damage(damage_received):
 			taking_damage = false
 
 func _on_hitbox_area_entered(area: Area2D) -> void:
-	if not die: take_damage(area.damage)
+	if not died: take_damage(area.damage)
 
 
 func _on_knight_animations_animation_finished() -> void:

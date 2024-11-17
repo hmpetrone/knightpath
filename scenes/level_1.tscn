@@ -5291,7 +5291,7 @@ layer = -10
 
 [node name="ParallaxLayer3" type="ParallaxLayer" parent="scene/ParallaxBackground"]
 position = Vector2(-409.2, 0)
-motion_mirroring = Vector2(819.2, 0)
+motion_mirroring = Vector2(819.2, 819.2)
 
 [node name="Parallax2D" type="Sprite2D" parent="scene/ParallaxBackground/ParallaxLayer3"]
 position = Vector2(0, -409.6)
@@ -5302,7 +5302,7 @@ flip_v = true
 
 [node name="ParallaxLayer2" type="ParallaxLayer" parent="scene/ParallaxBackground"]
 position = Vector2(-409.2, 0)
-motion_mirroring = Vector2(819.2, 0)
+motion_mirroring = Vector2(819.2, 819.2)
 
 [node name="Sprite2D" type="Sprite2D" parent="scene/ParallaxBackground/ParallaxLayer2"]
 position = Vector2(0, -409.6)
@@ -5331,7 +5331,7 @@ tile_set = SubResource("TileSet_1r4ak")
 
 [node name="knight" parent="." instance=ExtResource("1_bew6k")]
 unique_name_in_owner = true
-position = Vector2(-18, 1)
+position = Vector2(-837, -185)
 
 [node name="music track" type="AudioStreamPlayer2D" parent="knight"]
 position = Vector2(18, -1)
@@ -5343,6 +5343,7 @@ bus = &"Music"
 position = Vector2(63, -126)
 zoom = Vector2(3, 3)
 position_smoothing_enabled = true
+position_smoothing_speed = 10.0
 
 [node name="skeleton spawn" type="Marker2D" parent="."]
 position = Vector2(405, 9)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=3 uid="uid://dlbqjnwcl125e"]
+[gd_scene load_steps=47 format=3 uid="uid://dlbqjnwcl125e"]
 
 [ext_resource type="Texture2D" uid="uid://56egvbxgi0bf" path="res://assets/enemies/Skeleton/Attack.png" id="1_k5uyk"]
 [ext_resource type="Script" path="res://scripts/enemies/enemy_skeleton.gd" id="1_nqbet"]
@@ -278,6 +278,9 @@ animations = [{
 radius = 24.0
 height = 88.0225
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cufcl"]
+size = Vector2(873.133, 86.6076)
+
 [node name="enemy_skeleton" type="CharacterBody2D"]
 position = Vector2(0, 2)
 scale = Vector2(0.734711, 0.659925)
@@ -332,9 +335,20 @@ region_rect = Rect2(0, 168.545, 194.781, 44.7297)
 stream = ExtResource("10_3k18p")
 bus = &"SFX"
 
+[node name="sight" type="Area2D" parent="."]
+visible = false
+collision_layer = 256
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="sight"]
+position = Vector2(0, -45)
+scale = Vector2(1, 1)
+shape = SubResource("RectangleShape2D_cufcl")
+
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="frame_changed" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_frame_changed"]
 [connection signal="timeout" from="direction timer" to="." method="_on_direction_timer_timeout"]
 [connection signal="area_entered" from="first attack area" to="." method="_on_first_attack_area_area_entered"]
 [connection signal="body_entered" from="first attack area" to="." method="_on_first_attack_area_body_entered"]
 [connection signal="area_entered" from="hitbox" to="." method="_on_hitbox_area_entered"]
+[connection signal="body_entered" from="sight" to="." method="_on_sight_body_entered"]
+[connection signal="body_exited" from="sight" to="." method="_on_sight_body_exited"]
