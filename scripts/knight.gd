@@ -11,12 +11,15 @@ extends CharacterBody2D
 var prop: CollisionShape2D
 
 var speed = SPEED
+
+# Status
 var is_facing_right = true
 var is_crouching = false
 var attacking = false
 var alive = true
 var taking_damage = false
 var died: bool = false
+var praying: bool = false
 
 #player stats
 var damage = 15
@@ -40,6 +43,9 @@ func _physics_process(delta: float) -> void:
 	jump(delta)
 	if died: return
 	move_x()
+	if praying:
+		knight_animations.play("pray")
+		return
 	flip()
 	crouch()
 	first_attack()
@@ -72,6 +78,7 @@ func move_x():
 		
 	var direction := Input.get_axis("move_left", "move_right")
 	if direction:
+		praying = false
 		velocity.x = direction * speed
 	else:
 		velocity.x = move_toward(velocity.x, 0, speed*0.1)

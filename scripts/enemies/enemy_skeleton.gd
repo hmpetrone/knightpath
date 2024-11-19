@@ -18,7 +18,7 @@ var speed = SPEED
 var chasing: bool = false
 var is_facing_right = true
 
-var health = 120
+var health = 80
 var max_health: float = 60
 var min_health: float = 0
 var taking_damage: bool = false

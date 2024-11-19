@@ -1,6 +1,7 @@
 extends Node2D
 
 @onready var knight: CharacterBody2D = %knight
+@onready var camera: Camera2D = $knight/camera
 @onready var skeleton_spawn: Marker2D = $"skeleton spawn"
 @onready var surprise_area: Area2D = $surprise_area
 
@@ -12,8 +13,8 @@ var wave_count: int = 2
 var wave_active: bool = false
 # Called when the node enters the scene tree for the first time.
 
-#func _ready() -> void:
-	
+func _ready() -> void:
+	knight.praying = true
 	
 func _process(delta: float) -> void:
 	if wave_active:

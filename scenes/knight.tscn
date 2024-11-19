@@ -1,4 +1,4 @@
-[gd_scene load_steps=96 format=3 uid="uid://dcptyrkkswfhi"]
+[gd_scene load_steps=97 format=3 uid="uid://dcptyrkkswfhi"]
 
 [ext_resource type="Script" path="res://scripts/knight.gd" id="1_q6gek"]
 [ext_resource type="Texture2D" uid="uid://dcnt2ba58fbqv" path="res://assets/knight/Colour2/Outline/120x80_PNGSheets/_Idle.png" id="1_tpdud"]
@@ -228,6 +228,10 @@ region = Rect2(120, 0, 120, 80)
 [sub_resource type="AtlasTexture" id="AtlasTexture_7nne5"]
 atlas = ExtResource("3_xy8rm")
 region = Rect2(240, 0, 120, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a5b1n"]
+atlas = ExtResource("14_8t7sp")
+region = Rect2(1200, 0, 120, 80)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ffrp8"]
 atlas = ExtResource("14_8t7sp")
@@ -532,6 +536,14 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_a5b1n")
+}],
+"loop": true,
+"name": &"pray",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_ffrp8")
 }, {
 "duration": 1.0,
@@ -605,11 +617,6 @@ animations = [{
 "loop": true,
 "name": &"run",
 "speed": 15.0
-}, {
-"frames": [],
-"loop": true,
-"name": &"walk",
-"speed": 5.0
 }]
 
 [node name="knight" type="CharacterBody2D"]
@@ -621,19 +628,16 @@ JUMP_VELOCITY = -350.0
 [node name="knight animations" type="AnimatedSprite2D" parent="."]
 position = Vector2(12, -40)
 sprite_frames = SubResource("SpriteFrames_52aw5")
-animation = &"run"
+animation = &"pray"
 autoplay = "idle"
 
 [node name="idle shape" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2(7.25, -18)
 shape = ExtResource("13_loi56")
 
 [node name="attacks" parent="." instance=ExtResource("12_q2eim")]
-visible = false
 
 [node name="hitbox" type="Area2D" parent="." groups=["player_hitbox_area"]]
-visible = false
 collision_layer = 64
 collision_mask = 16
 
