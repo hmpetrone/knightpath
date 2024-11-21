@@ -89,7 +89,7 @@ func move_x():
 		return
 		
 	var direction := Input.get_axis("move_left", "move_right")
-	if direction:
+	if direction and not attacking:
 		praying = false
 		velocity.x = direction * speed
 	else:
@@ -171,8 +171,10 @@ func take_damage(damage_received):
 		rolling = false
 		idle_shape.position.y = -18
 		hitbox_cs.position.y = -18
-		idle_shape.shape = standing_cshape
-		hitbox_cs.shape = standing_cshape
+		idle_shape.set_deferred("shape",standing_cshape)
+		hitbox_cs.set_deferred("shape",standing_cshape)
+		#idle_shape.shape = standing_cshape
+		#hitbox_cs.shape = standing_cshape
 		set_movement_speed('default')
 		taking_damage = true
 		knight_animations.play("hurt")
