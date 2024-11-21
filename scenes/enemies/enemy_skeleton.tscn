@@ -282,6 +282,7 @@ height = 88.0225
 size = Vector2(873.133, 86.6076)
 
 [node name="enemy_skeleton" type="CharacterBody2D"]
+z_index = 1
 position = Vector2(0, 2)
 scale = Vector2(0.734711, 0.659925)
 collision_layer = 4

@@ -9,9 +9,9 @@
 [ext_resource type="Texture2D" uid="uid://c6m45ap8w2gmf" path="res://assets/knight/Colour2/Outline/120x80_PNGSheets/_Jump.png" id="3_xy8rm"]
 [ext_resource type="Texture2D" uid="uid://b85223k5fv1wa" path="res://assets/knight/Colour2/Outline/120x80_PNGSheets/_CrouchAll.png" id="4_c1owy"]
 [ext_resource type="Texture2D" uid="uid://d0bw1h8nxwgu5" path="res://assets/knight/Colour2/Outline/120x80_PNGSheets/_CrouchAttack.png" id="5_cg75g"]
-[ext_resource type="Texture2D" uid="uid://dd52odsnmufyu" path="res://assets/knight/Colour2/Outline/120x80_PNGSheets/_Attack.png" id="5_kavud"]
 [ext_resource type="Texture2D" uid="uid://6qmjuxjho1gq" path="res://assets/knight/Colour2/Outline/120x80_PNGSheets/_Death.png" id="7_d4ad8"]
 [ext_resource type="Texture2D" uid="uid://c61jeicqtcg2c" path="res://assets/knight/Colour2/Outline/120x80_PNGSheets/_Hit.png" id="8_1pvwo"]
+[ext_resource type="Texture2D" uid="uid://dfft88sq7r4ta" path="res://assets/knight/Colour2/Outline/120x80_PNGSheets/_AttackNoMovement.png" id="9_6vgab"]
 [ext_resource type="Texture2D" uid="uid://pmyj2ixfwsg2" path="res://assets/knight/Colour2/Outline/120x80_PNGSheets/_Hit2.PNG" id="9_c8vsj"]
 [ext_resource type="Texture2D" uid="uid://d3kjbio2igddy" path="res://assets/knight/Colour2/Outline/120x80_PNGSheets/_JumpFallInbetween.png" id="12_oq4ms"]
 [ext_resource type="PackedScene" uid="uid://dtrhu8dw23x6a" path="res://scenes/attacks.tscn" id="12_q2eim"]
@@ -149,20 +149,20 @@ region = Rect2(0, 0, 120, 80)
 atlas = ExtResource("12_oq4ms")
 region = Rect2(120, 0, 120, 80)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_4iws1"]
-atlas = ExtResource("5_kavud")
+[sub_resource type="AtlasTexture" id="AtlasTexture_u47cd"]
+atlas = ExtResource("9_6vgab")
 region = Rect2(0, 0, 120, 80)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ddpt1"]
-atlas = ExtResource("5_kavud")
+[sub_resource type="AtlasTexture" id="AtlasTexture_tex0o"]
+atlas = ExtResource("9_6vgab")
 region = Rect2(120, 0, 120, 80)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_k4cy8"]
-atlas = ExtResource("5_kavud")
+[sub_resource type="AtlasTexture" id="AtlasTexture_elrgm"]
+atlas = ExtResource("9_6vgab")
 region = Rect2(240, 0, 120, 80)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_oxkai"]
-atlas = ExtResource("5_kavud")
+[sub_resource type="AtlasTexture" id="AtlasTexture_eqp6i"]
+atlas = ExtResource("9_6vgab")
 region = Rect2(360, 0, 120, 80)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_owkgd"]
@@ -452,20 +452,20 @@ animations = [{
 }],
 "loop": false,
 "name": &"fall",
-"speed": 6.0
+"speed": 8.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_4iws1")
+"texture": SubResource("AtlasTexture_u47cd")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ddpt1")
+"texture": SubResource("AtlasTexture_tex0o")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_k4cy8")
+"texture": SubResource("AtlasTexture_elrgm")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_oxkai")
+"texture": SubResource("AtlasTexture_eqp6i")
 }],
 "loop": false,
 "name": &"first_attack",
@@ -581,7 +581,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"roll",
-"speed": 12.0
+"speed": 18.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -616,7 +616,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"run",
-"speed": 15.0
+"speed": 13.0
 }]
 
 [node name="knight" type="CharacterBody2D"]
@@ -628,8 +628,10 @@ JUMP_VELOCITY = -350.0
 [node name="knight animations" type="AnimatedSprite2D" parent="."]
 position = Vector2(12, -40)
 sprite_frames = SubResource("SpriteFrames_52aw5")
-animation = &"pray"
+animation = &"roll"
 autoplay = "idle"
+frame = 11
+frame_progress = 1.0
 
 [node name="idle shape" type="CollisionShape2D" parent="."]
 position = Vector2(7.25, -18)
